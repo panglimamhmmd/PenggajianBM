@@ -1,0 +1,6 @@
+.wordBound {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px; /* Atur lebar maksimum yang Anda inginkan */
+}
