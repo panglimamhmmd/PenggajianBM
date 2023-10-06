@@ -1,0 +1,24 @@
+Perjamnya  ada di bm di rentang 5000- 7000
+Membantu anak belajar di rentang 10.000- 15.000 peranak
+Transport di rentang 10.000-12500 perhari kerja
+
+
+buat menjadi long term
+    - dengan cara membuat rate yang dapat di ganti
+     
+print pdf 
+    - tidak ada lain-lainnya
+    - buat dalam bentuk pdf
+
+    
+konek data ke spreadsheet
+    -bisa langsung format perbulannya
+    -buat list masuk nya kapan saja
+
+
+buat aplikasi absennya sendiri
+    - aplikasi dengan scan barkod
+    - database tidak bisa diganti
+    - waktu tidak bisa  dirubah2
+
+buat dalam bentuk mobile / android base

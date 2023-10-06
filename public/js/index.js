@@ -6,7 +6,7 @@ const fieldHitung = document.getElementById("perhitungan");
 const kinerjaField = document.getElementById("kinerjaField");
 const kinButton = document.getElementById("kinerja");
 
-//rate
+//rate BM
 const harian = 12500;
 const perjam = 5000;
 const perSiswa = 7000;
@@ -23,14 +23,22 @@ var halamanKetik = tdElements[4].textContent;
 var quiziz = tdElements[5].textContent;
 var lainLain = tdElements[6].textContent;
 
+//hitung gaji
+const gajiJumlahMasuk = parseFloat(jumlahMasuk) * harian;
+const gajiJamKerja = parseFloat(jamKerja) * perjam;
+const gajiPersiswa = parseFloat(jumlahSiswa) * perSiswa;
+const gajiKunci = parseFloat(halamanKunci) * hlmnKunci;
+const gajiKetik = parseFloat(halamanKetik) * hlmnKetik;
+const gajiQuiziz = parseFloat(quiziz) * hlmnQuiziz;
+
 //kalkulasi gaji
 var gaji =
-  parseFloat(jumlahMasuk) * harian +
-  parseFloat(jamKerja) * perjam +
-  parseFloat(jumlahSiswa) * perSiswa +
-  parseFloat(halamanKunci) * hlmnKetik +
-  parseFloat(halamanKetik) * hlmnKunci +
-  parseFloat(quiziz) * hlmnQuiziz;
+  gajiJumlahMasuk +
+  gajiJamKerja +
+  gajiPersiswa +
+  gajiKunci +
+  gajiKetik +
+  gajiQuiziz;
 var kinerja = 0;
 
 // Perjamnya  ada di bm di rentang 5000- 7000
@@ -39,15 +47,16 @@ var kinerja = 0;
 
 function updateCount(addKinerja = 0) {
   const count = `
-    <p>${jumlahMasuk} x 12500 = Rp.${parseFloat(jumlahMasuk) * harian}</p>
-    <p>${jamKerja} x 5000 = Rp.${parseFloat(jamKerja) * perjam}</p>
-    <p>${jumlahSiswa} x 7000 = Rp.${parseFloat(jumlahSiswa) * perSiswa}</p>
-    <p>${halamanKunci} x 7000 = Rp.${parseFloat(halamanKunci) * hlmnKunci}</p>
-    <p>${halamanKetik} x 5000 = Rp.${parseFloat(halamanKetik) * hlmnKetik}</p>
-    <p>${quiziz}  x 7000 = Rp.${parseFloat(quiziz) * hlmnQuiziz}</p>
-    <p>Rp.${addKinerja}</p>
+    <p>${jumlahMasuk} x 12500 = Rp.${formatCurrency(gajiJumlahMasuk)}</p>
+    <p>${jamKerja} x 5000 = Rp.${formatCurrency(gajiJamKerja)}</p>
+    <p>${jumlahSiswa} x 7000 = Rp.${formatCurrency(gajiPersiswa)}</p>
+    <p>${halamanKunci} x 7000 = Rp.${formatCurrency(gajiKunci)}</p>
+    <p>${halamanKetik} x 5000 = Rp.${formatCurrency(gajiKetik)}</p>
+    <p>${quiziz}  x 7000 = Rp.${formatCurrency(gajiQuiziz)}</p>
+    <p>Rp.${formatCurrency(addKinerja)}</p>
+    <p> ------------------ + </p>
 
-    <b>Total : Rp.${gaji + addKinerja}</b>
+    <b>Total : Rp.${formatCurrency(gaji + addKinerja)}</b>
   `;
 
   fieldHitung.innerHTML = count;
@@ -57,8 +66,24 @@ function updateCount(addKinerja = 0) {
 kinButton.addEventListener("click", function () {
   const val = document.getElementById("kinerjaInput").value;
   updateCount(parseFloat(val)); // Memanggil fungsi updateCount untuk memperbarui tampilan
-  console.log(gaji);
+  // console.log(gaji);
 });
 
 // Memanggil updateCount untuk menginisialisasi tampilan awal
 updateCount();
+
+function formatCurrency(number) {
+  // Mengubah angka menjadi string
+  let numStr = number.toString();
+
+  // Membagi angka menjadi bagian sebelum dan sesudah desimal (jika ada)
+  let parts = numStr.split(".");
+  let integerPart = parts[0];
+  let decimalPart = parts.length > 1 ? "." + parts[1] : "";
+
+  // Menambahkan titik setiap 3 digit pada bagian integer
+  integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+  // Menggabungkan kembali bagian integer dan desimal
+  return integerPart + decimalPart;
+}

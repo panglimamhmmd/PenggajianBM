@@ -13,83 +13,92 @@
     />
   </head>
   <body>
-    <h1 class="text-center bg-warning p-2 text-white"><%= head %></h1>
-    <div class="container-fluid">
-      <div class="container col-md-8">
-        <table class="table table-hover table-light">
-          <thead>
-            <tr>
-              <th scope="col">Hari Masuk</th>
-              <th scope="col">Durasi Mengajar</th>
-              <th scope="col">Jumlah Siswa</th>
-              <th scope="col">Halaman Kunci</th>
-              <th scope="col">Halaman Ketik</th>
-              <th scope="col">Quiziz</th>
-              <th scope="col">Lain-Lain</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="accumulator">
-              <td><%= nama[0].jumlah_masuk %></td>
-              <td><%= nama[0].jam_kerja %></td>
-              <td><%= nama[0].siswa %></td>
-              <td><%= nama[0].halaman_kunci %></td>
-              <td><%= nama[0].halaman_ketik %></td>
-              <td><%= nama[0].quiziz %></td>
-              <td><%= nama[0].lain_lain %></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="perhitungan" id="loadField">
-          <div class="row">
-            <div class="col-md-2" id="fieldCountGaji">
-              <p>Transport:</p>
-              <p>Durasi Mengajar:</p>
-              <p>Jumlah Siswa:</p>
-              <p>Halaman Kunci:</p>
-              <p>Halaman Ketik:</p>
-              <p>Quiziz:</p>
-              <p>Kinerja:</p>
-            </div>
+    <%- include('partials/navbar.ejs') %>
+    <div class="container">
+      <div class="rounded-3">
+        <div class="container-fluid py-2">
+          <h1 class="display-5 fw-bold">Penggajian <%= head %></h1>
+          <p class="col-md-8 fs-4"></p>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="container col-md-8">
+          <table class="table table-hover table-light">
+            <thead>
+              <tr>
+                <th scope="col">Hari Masuk</th>
+                <th scope="col">Durasi Mengajar</th>
+                <th scope="col">Jumlah Siswa</th>
+                <th scope="col">Halaman Kunci</th>
+                <th scope="col">Halaman Ketik</th>
+                <th scope="col">Quiziz</th>
+                <th scope="col">Lain-Lain</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="accumulator">
+                <td><%= nama[0].jumlah_masuk %></td>
+                <td><%= nama[0].jam_kerja %></td>
+                <td><%= nama[0].siswa %></td>
+                <td><%= nama[0].halaman_kunci %></td>
+                <td><%= nama[0].halaman_ketik %></td>
+                <td><%= nama[0].quiziz %></td>
+                <td><%= nama[0].lain_lain %></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="perhitungan" id="loadField">
+            <div class="row">
+              <div class="col-md-2" id="fieldCountGaji">
+                <p>Transport:</p>
+                <p>Durasi Mengajar:</p>
+                <p>Jumlah Siswa:</p>
+                <p>Halaman Kunci:</p>
+                <p>Halaman Ketik:</p>
+                <p>Quiziz:</p>
+                <p>Kinerja:</p>
+              </div>
 
-            <div class="col-md-10" id="perhitungan"></div>
-          </div>
-          <div class="row" id="kinerjaField">
-            <div class="col-sm-4">
-              <label for="kinerja">Kinerja: </label>
-              <div class="input-group mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="ex. 125000"
-                  aria-label="Recipient's username"
-                  aria-describedby="basic-addon2"
-                  id="kinerjaInput"
-                />
-                <div class="input-group-append">
-                  <button
-                    class="btn btn-outline-secondary"
-                    type="button"
-                    id="kinerja"
-                  >
-                    Add
-                  </button>
+              <div class="col-md-10" id="perhitungan"></div>
+            </div>
+            <div class="row" id="kinerjaField">
+              <div class="col-sm-4">
+                <label for="kinerja">Kinerja: </label>
+                <div class="input-group mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="ex. 125000"
+                    aria-label="Recipient's username"
+                    aria-describedby="basic-addon2"
+                    id="kinerjaInput"
+                  />
+                  <div class="input-group-append">
+                    <button
+                      class="btn btn-outline-secondary"
+                      type="button"
+                      id="kinerja"
+                    >
+                      Add
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="buttonGroup">
-          <a href="#" class="btn btn-warning badge">
-            <i class="bi bi-pencil-square"></i>Cetak Slip Gaji</a
-          >
-          <a href="/" class="btn btn-secondary badge">
-            <i class="bi bi-pencil-square"></i>Kembali</a
-          >
+          <div class="buttonGroup">
+            <a href="#" class="btn btn-warning badge">
+              <i class="bi bi-pencil-square"></i>Cetak Slip Gaji</a
+            >
+            <a href="/" class="btn btn-secondary badge">
+              <i class="bi bi-pencil-square"></i>Kembali</a
+            >
+          </div>
         </div>
       </div>
     </div>
+
     <script src="/js/index.js"></script>
 
     <script

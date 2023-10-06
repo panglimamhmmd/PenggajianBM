@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rate Configuration</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <%- include('partials/navbar.ejs') %> <% const eachRate = rate[0] %>
+    <div class="container">
+      <h1>Konfigurasi Gaji</h1>
+      <div class="row-">
+        <div class="col-8">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Jenis</th>
+                <th scope="col">Rate</th>
+                <th scope="col">Edit</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <form action="/rateGaji" method="POST">
+              <tbody>
+                <tr>
+                  <th scope="row">Transport</th>
+                  <!--  -->
+                  <td>
+                    <input type="text" name="transport" id="transport"
+                    class="form-control" value="<%= eachRate["transport"] %>"
+                    required readonly>
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary"
+                      onclick="addRate('transport')"
+                    >
+                      +
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger"
+                      onclick="minRate('transport')"
+                    >
+                      -
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Rate Per Hour</th>
+                  <td>
+                    <input type="text" name="perJam"
+                    id="perJam"class="form-control" value="<%=eachRate["perJam"]
+                    %>" required readonly>
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary"
+                      onclick="addRate('perJam')"
+                    >
+                      +
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger"
+                      onclick="minRate('perJam')"
+                    >
+                      -
+                    </button>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">Rate Per Student</th>
+                  <td>
+                    <input type="text" name="perSiswa"
+                    id="perSiswa"class="form-control"
+                    value="<%=eachRate["perSiswa"] %>" required readonly>
+                  </td>
+
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary"
+                      onclick="addRate('perSiswa')"
+                    >
+                      +
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger"
+                      onclick="minRate('perSiswa')"
+                    >
+                      -
+                    </button>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">Halaman Ketik</th>
+                  <td>
+                    <input type="text" name="hlmnKetik"
+                    id="hlmnKetik"class="form-control"
+                    value="<%=eachRate["hlmnKetik"] %>" required readonly>
+                  </td>
+
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary"
+                      onclick="addRate('hlmnKetik')"
+                    >
+                      +
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger"
+                      onclick="minRate('hlmnKetik')"
+                    >
+                      -
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Halaman Kunci</th>
+                  <td>
+                    <input type="text" name="hlmnKunci"
+                    id="hlmnKunci"class="form-control"
+                    value="<%=eachRate["hlmnKunci"] %>" required readonly>
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary"
+                      onclick="addRate('hlmnKunci')"
+                    >
+                      +
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger"
+                      onclick="minRate('hlmnKunci')"
+                    >
+                      -
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Quiziz</th>
+                  <td>
+                    <input type="text" name="hlmnQuiziz"
+                    id="hlmnQuiziz"class="form-control"
+                    value="<%=eachRate["hlmnQuiziz"] %>" required readonly>
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary"
+                      onclick="addRate('hlmnQuiziz')"
+                    >
+                      +
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger"
+                      onclick="minRate('hlmnQuiziz')"
+                    >
+                      -
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <button
+                      type="submit"
+                      id="save"
+                      class="btn btn-outline-success"
+                    >
+                      Save Changes
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </form>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/rateGaji.js"></script>
+  </body>
+</html>

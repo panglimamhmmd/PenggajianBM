@@ -19,11 +19,12 @@
     />
   </head>
   <body>
-    <h1 class="bg-warning p-4 text-white">
+    <!-- <h1 class="bg-warning p-4 text-white">
       <a href="#" class="btn btn-warning badge">
         <i class="bi bi-pencil-square"></i>Penggajian BM</a
       >
-    </h1>
+    </h1> -->
+    <%- include('partials/navbar.ejs') %>
     <div class="container-fluid">
       <div class="container my-5 col-md-7">
         <table class="table table-hover table-light">
@@ -42,7 +43,7 @@
           </thead>
           <tbody>
             <% Object.keys(persons).forEach(function(nama) { %>
-            <tr class="text-center">
+            <tr class="text-center" href="/detailAsisten/<%= nama%>">
               <td><%= nama %></td>
               <td><%= persons[nama].jumlah_masuk %></td>
               <td><%= persons[nama].jam_kerja %></td>
