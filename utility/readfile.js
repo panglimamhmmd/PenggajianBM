@@ -200,13 +200,13 @@ function jumlahkanData(data) {
     });
 
     hasil[nama] = {
-      halaman_kunci: total_halaman_kunci,
-      halaman_ketik: total_halaman_ketik,
-      jam_kerja: total_selisih.toFixed(2),
-      lain_lain: lain_lain.slice(2),
       jumlah_masuk: jumlah_masuk,
-      quiziz: total_quiziz, // Menambah properti quiziz
+      jam_kerja: total_selisih.toFixed(2),
       siswa: total_siswa,
+      halaman_ketik: total_halaman_ketik,
+      halaman_kunci: total_halaman_kunci,
+      quiziz: total_quiziz, // Menambah properti quiziz
+      lain_lain: lain_lain.slice(2),
     };
   });
 

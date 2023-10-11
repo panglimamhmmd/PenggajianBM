@@ -23,6 +23,7 @@
       </div>
       <div class="container-fluid">
         <div class="container col-md-8">
+          <!-- tabel detail -->
           <table class="table table-hover table-light">
             <thead>
               <tr>
@@ -48,46 +49,97 @@
               </tr>
             </tbody>
           </table>
+          <!-- tabel detail -->
+
+          <!-- ! div perhitungan -->
           <div class="perhitungan" id="loadField">
             <div class="row">
-              <div class="col-md-2" id="fieldCountGaji">
-                <p>Transport:</p>
-                <p>Durasi Mengajar:</p>
-                <p>Jumlah Siswa:</p>
-                <p>Halaman Kunci:</p>
-                <p>Halaman Ketik:</p>
-                <p>Quiziz:</p>
-                <p>Kinerja:</p>
+              <div class="col-md-12" id="fieldCountGaji">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Jenis</th>
+                      <th scope="col">Detail</th>
+                      <th scope="col">Rate</th>
+                      <th scope="col">Hasil</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Transport</th>
+                      <td><%= data[0].jumlah_masuk %></td>
+                      <td><%= data[1].transport %></td>
+                      <td><%= data[2].transport %></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Jam Kerja</th>
+                      <td><%= data[0].jam_kerja %></td>
+                      <td><%= data[1].perJam %></td>
+                      <td><%= data[2].perJam %></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Siswa</th>
+                      <td><%= data[0].siswa %></td>
+                      <td><%= data[1].perSiswa %></td>
+                      <td><%= data[2].perSiswa %></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Halaman Ketik</th>
+                      <td><%= data[0].halaman_ketik %></td>
+                      <td><%= data[1].hlmnKetik %></td>
+                      <td><%= data[2].hlmnKetik %></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Halaman Kunci</th>
+                      <td><%= data[0].halaman_kunci %></td>
+                      <td><%= data[1].hlmnKunci %></td>
+                      <td><%= data[2].hlmnKunci %></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Quiziz</th>
+                      <td><%= data[0].quiziz %></td>
+                      <td><%= data[1].hlmnQuiziz %></td>
+                      <td><%= data[2].hlmnQuiziz %></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Kinerja</th>
+                      <th colspan="2">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="ex. 125000"
+                            id="kinerjaInput"
+                            required
+                          />
+                          <div class="input-group-append">
+                            <button
+                              class="btn btn-outline-secondary"
+                              type="button"
+                              id="kinerja"
+                            >
+                              Add
+                            </button>
+                          </div>
+                        </div>
+                      </th>
+                      <td id="kinerjaTarget">10000</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Total</th>
+                      <td colspan="2"></td>
+                      <th id="totalGaji"><%= data[2].total %></th>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
 
-              <div class="col-md-10" id="perhitungan"></div>
-            </div>
-            <div class="row" id="kinerjaField">
-              <div class="col-sm-4">
-                <label for="kinerja">Kinerja: </label>
-                <div class="input-group mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="ex. 125000"
-                    aria-label="Recipient's username"
-                    aria-describedby="basic-addon2"
-                    id="kinerjaInput"
-                  />
-                  <div class="input-group-append">
-                    <button
-                      class="btn btn-outline-secondary"
-                      type="button"
-                      id="kinerja"
-                    >
-                      Add
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <!-- <div class="col-md-10" id="perhitungan"></div> -->
+              <!-- ! div perhitungan -->
             </div>
           </div>
-          <div class="buttonGroup">
+
+          <div class="buttonGroup mb-5">
             <a href="#" class="btn btn-warning badge">
               <i class="bi bi-pencil-square"></i>Cetak Slip Gaji</a
             >

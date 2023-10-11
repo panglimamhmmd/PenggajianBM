@@ -3,7 +3,7 @@ const app = express();
 const port = 3000;
 // var wkhtmltopdf = require("wkhtmltopdf");
 const { excelReadFile, detailAsisten } = require("./utility/readfile");
-const { loadRate, editRate } = require("./utility/rateManage");
+const { loadRate, editRate, hitungRate } = require("./utility/rateManage");
 
 // view engine
 app.set("view engine", "ejs");
@@ -26,13 +26,13 @@ app.get("/", (req, res) => {
 app.get("/detailAsisten/:nama", (req, res) => {
   const nama = detailAsisten(req.params.nama);
   const head = req.params.nama;
-  res.render("detailAsisten", { nama: [nama], head: head });
+  const data = hitungRate(req.params.nama);
+  res.render("detailAsisten", { nama: [nama], head, data });
 });
 
 // api yang mengarahkan ke konfigurasi gaji sehingga bisa di ganti
 app.get("/rateGaji", (req, res) => {
   const rate = loadRate();
-  console.log(rate);
   res.render("rateGaji", { rate });
 });
 
