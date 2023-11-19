@@ -1,3 +1,13 @@
+flow:
+1. Upload terlebih dahulu, 
+2. alihkan ke root utama (main)
+
+flow root utama 
+dari data yang sudah dirubah menjadi json
+a. tampilkan data sesuai bulan dan tahun
+b. isi data bulanan berupa rangkuman tiap hari nya pengguna masuk
+
+
 Perjamnya  ada di bm di rentang 5000- 7000
 Membantu anak belajar di rentang 10.000- 15.000 peranak
 Transport di rentang 10.000-12500 perhari kerja
@@ -22,3 +32,6 @@ buat aplikasi absennya sendiri
     - waktu tidak bisa  dirubah2
 
 buat dalam bentuk mobile / android base
+
+
+
