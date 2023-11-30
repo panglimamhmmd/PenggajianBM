@@ -19,6 +19,8 @@ const {
     sortByMonth,
     readName,
     sortByName,
+    getMonthName,
+    konversiTanggal,
 } = require('./utility/sorting');
 const { log } = require('console');
 
@@ -44,24 +46,119 @@ app.post('/upload', upload.single('file'), (req, res) => {
     }); // tulis data ke modal/datas.json (database buatan)
     // Hapus file setelah selesai menggunakannya (opsional)
     fs.unlinkSync(filePath);
+
+    console.log('berhasil Simpan');
     // Kirim respons ke klien
-    res.redirect('/');
+    res.redirect('/absensi');
 });
 
+//menu upload
 app.get('/upload', (req, res) => {
+    res.render('uploadPage', { subMenu: 'upload' });
+});
+
+app.get('/upload123', (req, res) => {
     res.render('upload');
 });
 
+// redirect
 app.get('/', (req, res) => {
-    res.redirect('/menu');
+    res.redirect('/upload');
 });
 
-// app.get('/mentah', (req, res) => {
-//     const dataPengajar = loadDataPengajar();
-//     const summary = excelReadFile(dataPengajar);
+// Menu List Bulan
+app.get('/absensi', (req, res) => {
+    const dataPengajar = loadDataPengajar();
+    const bulan = readMonth(dataPengajar); // ambil bulan apa saja yang ada
 
-//     res.send(summary);
-// });
+    res.render('MonthList', {
+        subMenu: 'absensi',
+        monthList: bulan,
+    });
+});
+
+// Menu List Nama dan Summary
+app.get('/absensi/:bulan', (req, res) => {
+    const bulan = req.params.bulan;
+    const namaBulan = getMonthName(parseInt(bulan));
+    const dataPengajar = loadDataPengajar(); // load semua data
+    const dataSortedByMonth = sortByMonth(dataPengajar, bulan); // sort by month
+    const MonthlySummary = excelReadFile(dataSortedByMonth);
+    res.render('absensi', {
+        subMenu: 'absensi',
+        monthly: MonthlySummary,
+        bulan,
+        namaBulan,
+    });
+});
+
+// Menu List Detail Pengajar
+app.get('/absensi/:bulan/:nama', (req, res) => {
+    const bulan = req.params.bulan;
+    const nama = req.params.nama;
+    const namaBulan = getMonthName(parseInt(bulan));
+    // * Detail Perhari
+    const dataPengajar = loadDataPengajar(); // query seluruh data
+    const dataSortedByMonth = sortByMonth(dataPengajar, bulan); // filter berdasarkan bulan
+    const dataSortedByName = sortByName(dataSortedByMonth, nama); // filter berdasarkan nama
+    const tempSummary = dayDetail(dataSortedByName);
+
+    tempSummary.forEach((el) => {
+        el.tanggal = konversiTanggal(el.tanggal);
+    });
+
+    res.render('MonthlyList', {
+        subMenu: 'absensi',
+        nama,
+        bulan,
+        namaBulan,
+        summary: tempSummary,
+    });
+});
+
+// Atur Rate
+app.get('/rate', (req, res) => {
+    const rate = loadRate();
+    // res.send(rate);
+    res.render('PayrollConfig', { rate: rate, subMenu: 'rate' });
+});
+
+function formatAngka(angka) {
+    return angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+// Hitung Gaji
+app.get('/payroll/:bulan/:nama', (req, res) => {
+    const nama = req.params.nama;
+    const bulan = req.params.bulan;
+    const namaBulan = getMonthName(parseInt(bulan));
+    const rate = loadRate();
+    const person = [];
+    const dataPengajar = loadDataPengajar(); // query seluruh data
+    const dataSortedByMonth = sortByMonth(dataPengajar, bulan); // filter berdasarkan bulan
+    const MonthlySummary = excelReadFile(dataSortedByMonth);
+    MonthlySummary.forEach((dataIndividu) => {
+        if (dataIndividu.nama.toLowerCase() == nama.toLowerCase()) {
+            person.push(dataIndividu);
+        }
+    });
+    const gaji = hitungRate(person);
+
+    // res.send(rate);
+    // res.render('detailAsisten', { head: 'hitungaji', subMenu: 'detail' });
+    res.render('Absensi-Slipgaji', {
+        subMenu: 'absensi',
+        rate,
+        person,
+        nama,
+        bulan,
+        namaBulan,
+        gaji,
+        formatAngka,
+    });
+});
+
+// ! dummy
 
 // tampilan awal, pilihan bulan yang akan dipilih
 app.get('/menu', (req, res) => {
@@ -79,65 +176,66 @@ app.get('/menu/:bulan', (req, res) => {
     res.send({ DataSebulan: MonthlySummary });
 });
 
+function formatAngka(angka) {
+    return angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
 // detail absensi per orangan
 app.get('/menu/:bulan/:nama', (req, res) => {
-    // ambil parameter get
-    const bulan = req.params.bulan;
     const nama = req.params.nama;
-
-    // * Detail Perhari
+    const bulan = req.params.bulan;
+    const namaBulan = getMonthName(parseInt(bulan));
+    const rate = loadRate();
+    const person = [];
     const dataPengajar = loadDataPengajar(); // query seluruh data
     const dataSortedByMonth = sortByMonth(dataPengajar, bulan); // filter berdasarkan bulan
-    const dataSortedByName = sortByName(dataSortedByMonth, nama); // filter berdasarkan nama
-    const tempSummary = dayDetail(dataSortedByName);
-    // * Detail Perhari
-
-    // * Summary
-    const person = [];
     const MonthlySummary = excelReadFile(dataSortedByMonth);
     MonthlySummary.forEach((dataIndividu) => {
         if (dataIndividu.nama.toLowerCase() == nama.toLowerCase()) {
             person.push(dataIndividu);
         }
     });
+    const gaji = hitungRate(person);
 
-    // * Summary
-
-    //
-    res.send({ detail: tempSummary, ringkasan: person });
+    // res.send(rate);
+    // res.render('detailAsisten', { head: 'hitungaji', subMenu: 'detail' });
+    res.send({
+        subMenu: 'absensi',
+        rate,
+        person,
+        nama,
+        bulan,
+        namaBulan,
+        gaji,
+        format,
+    });
 });
 
+app.post('/');
+
 // ! api untuk mendisplay ringkasan semua data secara keseluruhan tanpa filter
-app.get('/payroll/:bulan/:nama', (req, res) => {
+app.get('/dataSummary/:bulan/:nama', (req, res) => {
     const bulan = req.params.bulan;
     const nama = req.params.nama;
 
     const dataPengajar = loadDataPengajar(); // load semua data
     const dataSortedByMonth = sortByMonth(dataPengajar, bulan);
+
     const person = [];
-    const MonthlySummary = excelReadFile(dataSortedByMonth);
+    const MonthlySummary = excelReadFile(dataPengajar);
     MonthlySummary.forEach((dataIndividu) => {
         if (dataIndividu.nama.toLowerCase() == nama.toLowerCase()) {
             person.push(dataIndividu);
         }
     });
-    res.send(person);
-});
-
-// ! api yang mengarahkan ke konfigurasi gaji sehingga bisa di ganti
-app.get('/rateGaji', (req, res) => {
-    const rate = loadRate();
-    // res.render('rateGaji', { rate });
-    res.send({ rate });
+    res.send(MonthlySummary);
 });
 
 // ! api untuk save pengubahan gaji
 app.post('/rateGaji', (req, res) => {
     editRate(req.body);
-    res.redirect('/');
+    res.redirect('/upload');
 });
-
-// ! api untuk mengolah upload data
 
 app.listen(port, () => {
     console.log(`example app listening to port http://localhost:${port}/`);

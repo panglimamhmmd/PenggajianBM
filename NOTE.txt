@@ -33,5 +33,10 @@ buat aplikasi absennya sendiri
 
 buat dalam bentuk mobile / android base
 
+simpan data rekap (perbulannya) dalam file json baru
 
 
+
+buat modal (sort by name)
+-> sort by month
+-> show

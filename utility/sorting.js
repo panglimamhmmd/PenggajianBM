@@ -2,6 +2,7 @@ const XLSX = require('xlsx');
 
 // mengambil nilai bulan yang ada pada data
 const readMonth = (datas) => {
+    const nameOfMonth = [];
     const uniqueMonths = [];
     // Loop melalui setiap entri datas
     for (const entry of datas) {
@@ -63,9 +64,52 @@ const sortByName = (datas, nama) => {
     return dataByName;
 };
 
+function getMonthName(number) {
+    return number === 1
+        ? 'Januari'
+        : number === 2
+        ? 'Februari'
+        : number === 3
+        ? 'Maret'
+        : number === 4
+        ? 'April'
+        : number === 5
+        ? 'Mei'
+        : number === 6
+        ? 'Juni'
+        : number === 7
+        ? 'Juli'
+        : number === 8
+        ? 'Agustus'
+        : number === 9
+        ? 'September'
+        : number === 10
+        ? 'Oktober'
+        : number === 11
+        ? 'November'
+        : number === 12
+        ? 'Desember'
+        : 'Nomor bulan tidak valid';
+}
+
+function konversiTanggal(serialNumber) {
+    const millisecondsPerDay = 24 * 60 * 60 * 1000;
+    const tanggalAwalExcel = new Date(1899, 11, 30); // Tanggal awal dalam format Excel
+
+    const daysSinceAwalExcel = serialNumber - 1; // Penyesuaian karena tanggal awal dihitung sebagai 1
+    const millisecondsSinceAwalExcel = daysSinceAwalExcel * millisecondsPerDay;
+
+    const tanggalAkhir = new Date(
+        tanggalAwalExcel.getTime() + millisecondsSinceAwalExcel
+    );
+    return tanggalAkhir.toDateString(); // Mengubah menjadi string tanggal yang lebih umum
+}
+
 module.exports = {
     readMonth,
     sortByMonth,
     readName,
     sortByName,
+    getMonthName,
+    konversiTanggal,
 };

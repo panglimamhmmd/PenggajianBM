@@ -28,11 +28,11 @@ const editRate = (data) => {
     });
 };
 
-const hitungRate = (namaAsisten) => {
+const hitungRate = (dataAsisten) => {
     //load data yang diperlukan
     const rates = loadRate();
     const rate = rates[0];
-    const asistData = detailAsisten(namaAsisten);
+    const asistData = dataAsisten[0];
     //load data yang diperlukan
 
     // rubah json menjadi string
@@ -58,7 +58,7 @@ const hitungRate = (namaAsisten) => {
         gaji.hlmnQuiziz;
 
     const hasil = [asistData, rate, gaji];
-    return hasil;
+    return gaji;
 };
 
 module.exports = {

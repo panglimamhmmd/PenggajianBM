@@ -2,3 +2,6 @@ Aturan penggunaan
 -file excel harus serupa dengan spread sheet
 -format tanggal = yyyy/mm/dd
 -urutan = nama,tanggal,waktu,keterangan,siswa,halaman_kunci,halaman_ketik,quiziz,lain_lain
+
+
+ 
