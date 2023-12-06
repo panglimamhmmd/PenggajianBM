@@ -4,6 +4,8 @@ const multer = require('multer');
 const fs = require('fs');
 const app = express();
 const port = 3000;
+const path = require('path');
+
 // var wkhtmltopdf = require("wkhtmltopdf");
 const {
     excelReadFile,
@@ -21,8 +23,11 @@ const {
     sortByName,
     getMonthName,
     konversiTanggal,
+    getFormattedDate,
 } = require('./utility/sorting');
-const { log } = require('console');
+
+const { cretaSalarySlip } = require('./utility/createPDF');
+const createSalarySlip = require('./utility/createPDF');
 
 // view engine
 app.set('view engine', 'ejs');
@@ -235,6 +240,60 @@ app.get('/dataSummary/:bulan/:nama', (req, res) => {
 app.post('/rateGaji', (req, res) => {
     editRate(req.body);
     res.redirect('/upload');
+});
+
+app.post('/cetakSlip/:bulan/:nama', (req, res) => {
+    const nama = req.params.nama;
+    const bulan = req.params.bulan;
+    const namaBulan = getMonthName(parseInt(bulan));
+    const rate = loadRate();
+    const person = [];
+    const dataPengajar = loadDataPengajar(); // query seluruh data
+    const dataSortedByMonth = sortByMonth(dataPengajar, bulan); // filter berdasarkan bulan
+    const MonthlySummary = excelReadFile(dataSortedByMonth);
+    MonthlySummary.forEach((dataIndividu) => {
+        if (dataIndividu.nama.toLowerCase() == nama.toLowerCase()) {
+            person.push(dataIndividu);
+        }
+    });
+
+    // ambil body request
+
+    const gaji = hitungRate(person);
+    const body = req.body;
+    // ambil total gaji
+    const total = parseInt(gaji.total + parseInt(body.kinerja));
+    // jam kerja
+    let currentDate = getFormattedDate();
+    const kinerja =
+        gaji.total - gaji.perJam - gaji.transport + parseInt(body.kinerja);
+
+    const dataSummary1 = {
+        transport: gaji.transport,
+        kinerja,
+        total,
+        jamKerja: gaji.perJam,
+        jamKerjaTotal: person[0].jam_kerja,
+        transportTotal: person[0].jumlah_masuk,
+    };
+    const dataSummary2 = {
+        bulan: namaBulan,
+        tahun: 2023,
+        nama,
+        tanggal: currentDate,
+    };
+
+    const stream = res.writeHead(200, {
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `attachment;filename=${dataSummary2.tahun}_${dataSummary2.bulan}_${dataSummary2.nama}.pdf`,
+    });
+
+    createSalarySlip(
+        dataSummary1,
+        dataSummary2,
+        (chunk) => stream.write(chunk), // Write the chunk directly to the stream
+        () => stream.end() // End the stream after all data has been written
+    );
 });
 
 app.listen(port, () => {

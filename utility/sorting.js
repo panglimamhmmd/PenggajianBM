@@ -105,6 +105,36 @@ function konversiTanggal(serialNumber) {
     return tanggalAkhir.toDateString(); // Mengubah menjadi string tanggal yang lebih umum
 }
 
+function getFormattedDate() {
+    const months = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+    ];
+
+    const today = new Date();
+
+    // Ambil informasi tanggal, bulan, dan tahun dari objek Date
+    const day = String(today.getDate()).padStart(2, '0'); // Tambahkan '0' di depan jika hanya satu digit
+    const monthIndex = today.getMonth();
+    const month = months[monthIndex];
+    const year = today.getFullYear();
+
+    // Gabungkan dalam format yang diinginkan (dd/month/yyyy)
+    const formattedDate = `${day} ${month} ${year}`;
+
+    return formattedDate;
+}
+
 module.exports = {
     readMonth,
     sortByMonth,
@@ -112,4 +142,5 @@ module.exports = {
     sortByName,
     getMonthName,
     konversiTanggal,
+    getFormattedDate,
 };

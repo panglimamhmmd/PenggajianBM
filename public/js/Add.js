@@ -29,11 +29,14 @@ const btnAdd = document.getElementById('buttonKinerja');
 let jumlahTotal = konversiAngka(totalGaji.value);
 
 btnAdd.addEventListener('click', () => {
-    console.log(parseInt(tambahKinerja.value));
-    console.log(jumlahTotal);
     let kinerja = parseInt(tambahKinerja.value);
-    let sum = jumlahTotal + kinerja;
-    totalGaji.value = formatAngka(sum);
+    console.log(kinerja);
+    if (isNaN(kinerja) || typeof kinerja !== 'number') {
+        alert('Mohon isi form kinerja!');
+    } else {
+        let sum = jumlahTotal + kinerja;
+        totalGaji.value = formatAngka(sum);
+    }
 
     // document.getElementById(totalGaji).innerText = kinerja + totalGaji;
 });
